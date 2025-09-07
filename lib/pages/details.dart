@@ -39,8 +39,8 @@ class _DetailsState extends State<Details> {
             // ✅ FIX: use Image.asset instead of wrong cast
             Image.asset(
               widget.image,
-              height: 200,
-              width: 200,
+              height: 120,
+              width: 120,
               fit: BoxFit.cover,
             ),
             const SizedBox(height: 20),

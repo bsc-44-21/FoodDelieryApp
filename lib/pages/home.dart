@@ -62,19 +62,40 @@ class _HomeState extends State<Home> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => const Details(
-                            image: "images/rice.png",
-                            name: "Delicious Rice",
-                            slogan: "Meat/Chicken",
+                            image: "images/pizza.png",
+                            name: "Pepperon Pizza",
+                            slogan: "Delicious",
                             price: 20.0,
                           ),
                         ),
                       );
                     },
                     child: buildFoodCard(
-                      image: "images/rice.png",
-                      title: "Delicious Rice",
-                      subtitle: "Meat/Chicken",
+                      image: "images/pizza.png",
+                      title: "Pepperon Pizza",
+                      subtitle: "Delicious",
                       price: "\$20",
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Details(
+                            image: "images/Hamburger.png",
+                            name: "Hamburger Meal",
+                            slogan: "Delicious",
+                            price: 17,
+                          ),
+                        ),
+                      );
+                    },
+                    child: buildFoodCard(
+                      image: "images/Hamburger.png",
+                      title: "Hamburger Meal",
+                      subtitle: "Delicious",
+                      price: "\$17",
                     ),
                   ),
                   GestureDetector(
@@ -92,31 +113,10 @@ class _HomeState extends State<Home> {
                       );
                     },
                     child: buildFoodCard(
-                      image: "images/Sausage.png",
-                      title: "Tasty Sausage",
-                      subtitle: "Cheese Sausage",
-                      price: "\$17",
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Details(
-                            image: "images/Sausage.png",
-                            name: "Tasty Sausage",
-                            slogan: "Cheese Sausage",
-                            price: 17,
-                          ),
-                        ),
-                      );
-                    },
-                    child: buildFoodCard(
-                      image: "images/salad2.png",
-                      title: "Fresh Salad",
-                      subtitle: "Cheese Sausage",
-                      price: "\$5",
+                      image: "images/rice.png",
+                      title: "Delicious Rice",
+                      subtitle: "Meat/Chicken",
+                      price: "\$20",
                     ),
                   ),
                 ],
@@ -138,7 +138,7 @@ class _HomeState extends State<Home> {
                 child: Row(
                   children: [
                     Image.asset(
-                      "images/salad2.png",
+                      "images/salad4.png",
                       width: 120,
                       height: 120,
                       fit: BoxFit.cover,
