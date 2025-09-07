@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
             const SizedBox(height: 30),
             Text("Delicious Food", style: AppWidget.HeadLineTextFieldStyle()),
             Text(
-              "Discover and Get Great Food",
+              "Discover & Get Great Food",
               style: AppWidget.LightTextFieldStyle(),
             ),
             SizedBox(height: 20),
