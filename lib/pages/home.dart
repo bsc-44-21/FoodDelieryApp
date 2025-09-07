@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/widget/widget_support.dart';
+import 'package:food_app/pages/details.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -43,91 +44,127 @@ class _HomeState extends State<Home> {
               "Discover & Get Great Food",
               style: AppWidget.LightTextFieldStyle(),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Category Items
             showItem(),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
 
-            // Horizontal Scroll Cards
+            // Horizontal Scroll Cards with navigation
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  buildFoodCard(
-                    image: "images/rice.png",
-                    title: "Delicious Rice",
-                    subtitle: "Meat/Chicken",
-                    price: "\$20",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Details(
+                            image: "images/rice.png",
+                            name: "Delicious Rice",
+                            slogan: "Meat/Chicken",
+                            price: 20.0,
+                          ),
+                        ),
+                      );
+                    },
+                    child: buildFoodCard(
+                      image: "images/rice.png",
+                      title: "Delicious Rice",
+                      subtitle: "Meat/Chicken",
+                      price: "\$20",
+                    ),
                   ),
-                  buildFoodCard(
-                    image: "images/Sausage.png",
-                    title: "Tasty Sausage",
-                    subtitle: "Cheese Sausage",
-                    price: "\$17",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Details(
+                            image: "images/rice.png",
+                            name: "Delicious Rice",
+                            slogan: "Meat/Chicken",
+                            price: 20,
+                          ),
+                        ),
+                      );
+                    },
+                    child: buildFoodCard(
+                      image: "images/Sausage.png",
+                      title: "Tasty Sausage",
+                      subtitle: "Cheese Sausage",
+                      price: "\$17",
+                    ),
                   ),
-                  buildFoodCard(
-                    image: "images/salad2.png",
-                    title: "Tasty Sausage",
-                    subtitle: "Cheese Sausage",
-                    price: "\$5",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Details(
+                            image: "images/Sausage.png",
+                            name: "Tasty Sausage",
+                            slogan: "Cheese Sausage",
+                            price: 17,
+                          ),
+                        ),
+                      );
+                    },
+                    child: buildFoodCard(
+                      image: "images/salad2.png",
+                      title: "Fresh Salad",
+                      subtitle: "Cheese Sausage",
+                      price: "\$5",
+                    ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 30),
-            Container(
-              child: Material(
-                elevation: 5,
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        "images/salad2.png",
-                        width: 120,
-                        height: 120,
-                        fit: BoxFit.cover,
-                      ),
-                      SizedBox(width: 20),
-                      Column(
-                        children: [
-                          Container(
-                            child: Text(
-                              "Medterrenain",
-                              style: AppWidget.SemiboldTextFieldStyle(),
-                            ),
-                          ),
-                          Container(
-                            child: Text(
-                              "ChickPea Salad",
-                              style: AppWidget.SemiboldTextFieldStyle(),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Container(
-                            child: Text(
-                              "Fresh and Healthy",
-                              style: AppWidget.LightTextFieldStyle(),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Container(
-                            child: Text(
-                              "\$15",
-                              style: AppWidget.SemiboldTextFieldStyle(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+
+            const SizedBox(height: 30),
+
+            // Example Recommended Section
+            Material(
+              elevation: 5,
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      "images/salad2.png",
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Medterrenain",
+                          style: AppWidget.SemiboldTextFieldStyle(),
+                        ),
+                        Text(
+                          "ChickPea Salad",
+                          style: AppWidget.SemiboldTextFieldStyle(),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          "Fresh and Healthy",
+                          style: AppWidget.LightTextFieldStyle(),
+                        ),
+                        const SizedBox(height: 5),
+                        Text("\$15", style: AppWidget.SemiboldTextFieldStyle()),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -137,7 +174,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  // Widget for Food Card (to avoid repetition)
+  // Food Card Widget
   Widget buildFoodCard({
     required String image,
     required String title,
@@ -160,7 +197,6 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipOval(
-                // 🔑 Makes image circular
                 child: Image.asset(
                   image,
                   width: 170,
