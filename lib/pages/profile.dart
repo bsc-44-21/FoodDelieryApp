@@ -6,7 +6,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100], // consistent with Home & Wallet
+      // backgroundColor: Colors.grey[100],
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
@@ -37,7 +37,7 @@ class Profile extends StatelessWidget {
                       ),
                       child: const CircleAvatar(
                         radius: 50,
-                        backgroundImage: AssetImage("images/user_avatar.png"),
+                        backgroundImage: AssetImage("images/kun.png"),
                       ),
                     ),
                     const SizedBox(height: 16),
