@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home.dart'; // make sure to import your home screen
+import 'package:food_app/pages/signin_signup.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -7,81 +7,54 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(
-        0xFFF5F5F5,
-      ), // same subtle background as your app
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Spacer(),
-
-              // App Logo or Food Image
-              Center(
-                child: Image.asset(
-                  "assets/images/welcome_food.png", // replace with your own asset
-                  height: 200,
-                  width: 200,
-                  fit: BoxFit.cover,
-                ),
-              ),
-
-              const SizedBox(height: 40),
-
-              // Main Title
+              Image.asset("images/Hamburger.png", height: 180),
+              const SizedBox(height: 50),
               const Text(
-                "Delicious Meals\nDelivered To You",
+                "Welcome to FoodieApp",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  height: 1.3,
-                ),
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
-
               const SizedBox(height: 20),
-
-              // Subtitle
               const Text(
-                "Discover and order your favorite foods from our menu and get them delivered fresh and fast!",
+                "Discover and order delicious food from your favorite restaurants.",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, color: Colors.grey, height: 1.5),
+                style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
-
-              const Spacer(),
+              const SizedBox(height: 50),
 
               // Get Started Button
               SizedBox(
                 width: double.infinity,
+                height: 55,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    // Navigate to SignInSignUpScreen
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Home()),
+                      MaterialPageRoute(
+                        builder: (context) => const SignInSignUpScreen(),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(vertical: 18),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: const Text(
                     "Get Started",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
               ),
-
-              const SizedBox(height: 30),
             ],
           ),
         ),
