@@ -93,7 +93,6 @@ class _ProfileState extends State<Profile> {
                 );
               }),
 
-              // ✅ Logout now navigates to SignInSignUp screen
               buildProfileOption(Icons.logout, "Logout", () {
                 Navigator.pushReplacement(
                   context,
