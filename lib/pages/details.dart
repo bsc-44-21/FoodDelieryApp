@@ -56,7 +56,7 @@ class _DetailsState extends State<Details> {
               ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 80),
 
             // Food Image
             Center(
