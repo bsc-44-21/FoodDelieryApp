@@ -19,30 +19,40 @@ class SignInSignUpScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
 
-              // Email Field
+              // Email Field with border
               TextField(
                 decoration: InputDecoration(
                   hintText: "Email",
                   filled: true,
                   fillColor: Colors.white,
-                  border: OutlineInputBorder(
+                  suffixIcon: const Icon(Icons.email, color: Colors.grey),
+                  enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+                    borderSide: const BorderSide(color: Colors.black, width: 1),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: Colors.black, width: 2),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
 
-              // Password Field
+              // Password Field with border
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: "Password",
                   filled: true,
                   fillColor: Colors.white,
-                  border: OutlineInputBorder(
+                  suffixIcon: const Icon(Icons.lock, color: Colors.grey),
+                  enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+                    borderSide: const BorderSide(color: Colors.black, width: 1),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: Colors.black, width: 2),
                   ),
                 ),
               ),
@@ -76,7 +86,6 @@ class SignInSignUpScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // Or Divider
               Row(
                 children: const [
                   Expanded(child: Divider(thickness: 1)),
@@ -97,8 +106,8 @@ class SignInSignUpScreen extends StatelessWidget {
                     onPressed: () {},
                     icon: Image.asset(
                       "images/google.png",
-                      width: 24,
-                      height: 24,
+                      width: 44,
+                      height: 44,
                     ),
                     label: const Text("Google"),
                     style: ElevatedButton.styleFrom(
@@ -116,8 +125,8 @@ class SignInSignUpScreen extends StatelessWidget {
                     onPressed: () {},
                     icon: Image.asset(
                       "images/facebook.png",
-                      width: 24,
-                      height: 24,
+                      width: 40,
+                      height: 40,
                     ),
                     label: const Text("Facebook"),
                     style: ElevatedButton.styleFrom(

@@ -25,10 +25,7 @@ class _HomeState extends State<Home> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Hey, Abdul-Rasheed",
-                  style: AppWidget.boldTextFieldStyle(),
-                ),
+                Text("Abdul-Rasheed", style: AppWidget.boldTextFieldStyle()),
                 GestureDetector(
                   onTap: () {
                     // Navigate to Wallet screen

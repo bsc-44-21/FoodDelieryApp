@@ -1,4 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/pages/order.dart';
+
+// Cart item model
+class CartItem {
+  final String name;
+  final String image;
+  final double price;
+  int quantity;
+
+  CartItem({
+    required this.name,
+    required this.image,
+    required this.price,
+    this.quantity = 1,
+  });
+}
+
+// Global cart list
+List<CartItem> cartItems = [];
 
 class Details extends StatefulWidget {
   final String image;
@@ -19,7 +38,7 @@ class Details extends StatefulWidget {
 }
 
 class _DetailsState extends State<Details> {
-  int quantity = 1; // default quantity is 1
+  int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +50,17 @@ class _DetailsState extends State<Details> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Back Button in white circle
+            // Back Button
             GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
+              onTap: () => Navigator.pop(context),
               child: Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black12,
+                      color: Colors.black,
                       blurRadius: 4,
                       offset: Offset(2, 2),
                     ),
@@ -52,6 +69,7 @@ class _DetailsState extends State<Details> {
                 child: const Icon(
                   Icons.arrow_back_ios_new_outlined,
                   color: Colors.black,
+                  size: 28,
                 ),
               ),
             ),
@@ -70,7 +88,7 @@ class _DetailsState extends State<Details> {
 
             const SizedBox(height: 40),
 
-            // Food Details Container
+            // Food Details
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -78,7 +96,7 @@ class _DetailsState extends State<Details> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 6,
@@ -116,7 +134,6 @@ class _DetailsState extends State<Details> {
                         ),
                         Row(
                           children: [
-                            // Minus Button (bigger size)
                             IconButton(
                               onPressed: () {
                                 setState(() {
@@ -124,7 +141,7 @@ class _DetailsState extends State<Details> {
                                 });
                               },
                               icon: const Icon(Icons.remove_circle_outline),
-                              iconSize: 36, // increased size
+                              iconSize: 36,
                             ),
                             Text(
                               quantity.toString(),
@@ -133,7 +150,6 @@ class _DetailsState extends State<Details> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            // Plus Button (bigger size)
                             IconButton(
                               onPressed: () {
                                 setState(() {
@@ -141,7 +157,7 @@ class _DetailsState extends State<Details> {
                                 });
                               },
                               icon: const Icon(Icons.add_circle_outline),
-                              iconSize: 36, // increased size
+                              iconSize: 36,
                             ),
                           ],
                         ),
@@ -150,7 +166,7 @@ class _DetailsState extends State<Details> {
 
                     const SizedBox(height: 16),
 
-                    // Price Section
+                    // Total Price
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -186,7 +202,30 @@ class _DetailsState extends State<Details> {
                           padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
                         onPressed: () {
-                          // Cart Logic here
+                          // Check if item already exists in cart
+                          var existing = cartItems.indexWhere(
+                            (item) => item.name == widget.name,
+                          );
+                          if (existing != -1) {
+                            cartItems[existing].quantity += quantity;
+                          } else {
+                            cartItems.add(
+                              CartItem(
+                                name: widget.name,
+                                image: widget.image,
+                                price: widget.price,
+                                quantity: quantity,
+                              ),
+                            );
+                          }
+
+                          // Navigate to Order screen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Order(),
+                            ),
+                          );
                         },
                         child: const Text(
                           "Add to Cart",
