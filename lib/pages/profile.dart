@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'order.dart';
+import 'signin_signup.dart'; // ✅ Import your SignInSignUp screen
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -76,9 +78,30 @@ class _ProfileState extends State<Profile> {
               buildProfileOption(Icons.edit, "Edit Profile", () {
                 _showEditDialog();
               }),
-              buildProfileOption(Icons.shopping_bag, "My Orders"),
-              buildProfileOption(Icons.settings, "Settings"),
-              buildProfileOption(Icons.logout, "Logout"),
+              buildProfileOption(Icons.shopping_bag, "My Orders", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Order()),
+                );
+              }),
+              buildProfileOption(Icons.settings, "Settings", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsScreen(),
+                  ),
+                );
+              }),
+
+              // ✅ Logout now navigates to SignInSignUp screen
+              buildProfileOption(Icons.logout, "Logout", () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SignInSignUpScreen(),
+                  ),
+                );
+              }),
             ],
           ),
         ),
@@ -160,7 +183,6 @@ class _ProfileState extends State<Profile> {
           ),
           ElevatedButton(
             onPressed: () {
-              // Basic email validation
               if (!emailController.text.contains('@') ||
                   !emailController.text.contains('.')) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -177,6 +199,42 @@ class _ProfileState extends State<Profile> {
               Navigator.pop(context);
             },
             child: const Text("Save"),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ------------------ Settings Screen ------------------
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Settings"),
+        backgroundColor: Colors.black,
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          ListTile(
+            leading: const Icon(Icons.dark_mode),
+            title: const Text("Dark Mode"),
+            trailing: Switch(value: false, onChanged: (val) {}),
+          ),
+          ListTile(
+            leading: const Icon(Icons.notifications),
+            title: const Text("Notifications"),
+            trailing: Switch(value: true, onChanged: (val) {}),
+          ),
+          ListTile(
+            leading: const Icon(Icons.language),
+            title: const Text("Language"),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () {},
           ),
         ],
       ),
