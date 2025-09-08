@@ -93,7 +93,7 @@ class _HomeState extends State<Home> {
                     },
                     child: buildFoodCard(
                       image: "images/Hamburger.png",
-                      title: "Hamburger Meal",
+                      title: "Hamburger",
                       subtitle: "Delicious",
                       price: "\$17",
                     ),
