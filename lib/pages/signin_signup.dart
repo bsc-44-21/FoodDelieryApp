@@ -1,8 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/pages/bottomnav.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SignInSignUpScreen extends StatelessWidget {
+class SignInSignUpScreen extends StatefulWidget {
   const SignInSignUpScreen({super.key});
+
+  @override
+  State<SignInSignUpScreen> createState() => _SignInSignUpScreenState();
+}
+
+class _SignInSignUpScreenState extends State<SignInSignUpScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  Future<void> _signIn() async {
+    setState(() => _isLoading = true);
+    try {
+      await Supabase.instance.client.auth.signInWithPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const BottomNav()),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Login failed: $e")));
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _signUp() async {
+    setState(() => _isLoading = true);
+    try {
+      final response = await Supabase.instance.client.auth.signUp(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      if (response.user != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Signup successful! Check your email.")),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Signup failed: $e")));
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +73,9 @@ class SignInSignUpScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
 
-              // Email Field with border
+              // Email Field
               TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   hintText: "Email",
                   filled: true,
@@ -38,8 +93,9 @@ class SignInSignUpScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Password Field with border
+              // Password Field
               TextField(
+                controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: "Password",
@@ -63,23 +119,39 @@ class SignInSignUpScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BottomNav(),
-                      ),
-                    );
-                  },
+                  onPressed: _isLoading ? null : _signIn,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text(
+                          "Sign In",
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              // Sign Up Button
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: OutlinedButton(
+                  onPressed: _isLoading ? null : _signUp,
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.black),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   child: const Text(
-                    "Sign In",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    "Sign Up",
+                    style: TextStyle(fontSize: 18, color: Colors.black),
                   ),
                 ),
               ),
@@ -103,7 +175,13 @@ class SignInSignUpScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Google login not yet implemented"),
+                        ),
+                      );
+                    },
                     icon: Image.asset(
                       "images/google.png",
                       width: 44,
@@ -122,7 +200,13 @@ class SignInSignUpScreen extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Facebook login not yet implemented"),
+                        ),
+                      );
+                    },
                     icon: Image.asset(
                       "images/facebook.png",
                       width: 40,
