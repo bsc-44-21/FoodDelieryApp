@@ -21,24 +21,61 @@ class _OrderState extends State<Order> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "My Orders",
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+        child: Column(
+          children: [
+            // Back Button
+            Align(
+              alignment: Alignment.topLeft,
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.only(left: 20, top: 20),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        blurRadius: 4,
+                        offset: Offset(2, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    color: Colors.black,
+                    size: 28,
+                  ),
+                ),
               ),
-              const SizedBox(height: 10),
-              const Text(
-                "Review your items before checkout",
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-              const SizedBox(height: 30),
+            ),
 
-              // List of Cart Items
-              Expanded(
+            const SizedBox(height: 10),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "My Orders",
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Review your items before checkout",
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+
+            // List of Cart Items
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: cartItems.isEmpty
                     ? const Center(
                         child: Text(
@@ -152,11 +189,14 @@ class _OrderState extends State<Order> {
                         },
                       ),
               ),
+            ),
 
-              const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-              // Total & Checkout
-              Container(
+            // Total & Checkout
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -194,15 +234,17 @@ class _OrderState extends State<Order> {
                         // Checkout logic
                       },
                       child: const Text(
-                        "Pay Your Order",
+                        "Pay Your Order", //Where payment will be processed once clicked
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );
