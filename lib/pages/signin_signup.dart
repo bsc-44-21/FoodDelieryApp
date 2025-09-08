@@ -89,17 +89,24 @@ class SignInSignUpScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Social Buttons
+              // Social Buttons using local images
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton.icon(
                     onPressed: () {},
-                    icon: const Icon(Icons.g_mobiledata),
+                    icon: Image.asset(
+                      "images/google.png",
+                      width: 24,
+                      height: 24,
+                    ),
                     label: const Text("Google"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 20,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -107,11 +114,18 @@ class SignInSignUpScreen extends StatelessWidget {
                   ),
                   ElevatedButton.icon(
                     onPressed: () {},
-                    icon: const Icon(Icons.facebook),
+                    icon: Image.asset(
+                      "images/facebook.png",
+                      width: 24,
+                      height: 24,
+                    ),
                     label: const Text("Facebook"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 20,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
