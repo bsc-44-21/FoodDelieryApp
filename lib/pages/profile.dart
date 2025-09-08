@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/pages/signIn.dart';
 import 'order.dart';
-import 'signin_signup.dart'; // ✅ Import your SignInSignUp screen
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -96,9 +96,7 @@ class _ProfileState extends State<Profile> {
               buildProfileOption(Icons.logout, "Logout", () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const SignInSignUpScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const SignInScreen()),
                 );
               }),
             ],

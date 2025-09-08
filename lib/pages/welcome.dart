@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/pages/signin_signup.dart';
+import 'package:food_app/pages/signIn.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -35,11 +35,11 @@ class WelcomeScreen extends StatelessWidget {
                 height: 55,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navigate to SignInSignUpScreen
+                    // Navigate to SignInScreen
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const SignInSignUpScreen(),
+                        builder: (context) => const SignInScreen(),
                       ),
                     );
                   },
