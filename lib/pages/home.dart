@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/widget/widget_support.dart';
 import 'package:food_app/pages/details.dart';
+import 'package:food_app/pages/wallet.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -28,12 +29,21 @@ class _HomeState extends State<Home> {
                   "Hey, Abdul-Rasheed",
                   style: AppWidget.boldTextFieldStyle(),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(4),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to Wallet screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Wallet()),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Icon(Icons.shopping_cart, color: Colors.white),
                   ),
-                  child: const Icon(Icons.shopping_cart, color: Colors.white),
                 ),
               ],
             ),
