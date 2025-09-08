@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/pages/signIn.dart';
 import 'order.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -10,10 +11,37 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final supabase = Supabase.instance.client;
+
   // User info variables
-  String userName = "Abdul-Rasheed";
-  String userEmail = "abdulrasheed@email.com";
-  String userPhone = "0123456789";
+  String userName = "";
+  String userEmail = "";
+  String userPhone = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    final user = supabase.auth.currentUser;
+    if (user == null) return;
+
+    final data = await supabase
+        .from('profiles')
+        .select()
+        .eq('id', user.id)
+        .maybeSingle();
+
+    if (data != null) {
+      setState(() {
+        userName = data['name'] ?? '';
+        userPhone = data['phone'] ?? '';
+        userEmail = user.email ?? ''; // email comes from auth
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -161,11 +189,7 @@ class _ProfileState extends State<Profile> {
               controller: nameController,
               decoration: const InputDecoration(labelText: "Name"),
             ),
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: "Email"),
-              keyboardType: TextInputType.emailAddress,
-            ),
+
             TextField(
               controller: phoneController,
               decoration: const InputDecoration(labelText: "Phone"),
@@ -179,20 +203,20 @@ class _ProfileState extends State<Profile> {
             child: const Text("Cancel"),
           ),
           ElevatedButton(
-            onPressed: () {
-              if (!emailController.text.contains('@') ||
-                  !emailController.text.contains('.')) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Please enter a valid email")),
-                );
-                return;
-              }
-
+            onPressed: () async {
               setState(() {
                 userName = nameController.text;
-                userEmail = emailController.text;
                 userPhone = phoneController.text;
               });
+
+              await supabase
+                  .from('profiles')
+                  .update({
+                    'name': nameController.text,
+                    'phone': phoneController.text,
+                  })
+                  .eq('id', supabase.auth.currentUser!.id);
+
               Navigator.pop(context);
             },
             child: const Text("Save"),
