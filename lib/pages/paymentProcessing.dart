@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class PaymentScreen extends StatefulWidget {
   final double amount;
+
   const PaymentScreen({super.key, required this.amount});
 
   @override
@@ -11,89 +12,129 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   final _phoneController = TextEditingController();
 
-  bool _isProcessing = false;
+  void _processPayment() {
+    String number = _phoneController.text.trim();
 
-  Future<void> _processPayment() async {
-    if (_phoneController.text.isEmpty) {
+    if (number.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Please enter your Airtel Money number")),
       );
       return;
     }
 
-    setState(() => _isProcessing = true);
+    if (!number.startsWith("9")) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Invalid number. Airtel Money numbers must start with 09",
+          ),
+        ),
+      );
+      return;
+    }
 
-    // ⚡ Here you’ll call your backend API to trigger Airtel Money STK push
-    await Future.delayed(const Duration(seconds: 2)); // simulate API call
+    String fullNumber = "+265$number";
 
-    setState(() => _isProcessing = false);
-
+    // TODO: integrate actual Airtel Money API here
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          "Payment request sent to ${_phoneController.text}. Please authorize with your Airtel PIN.",
+          "Processing payment of MWK ${widget.amount} for $fullNumber",
         ),
       ),
     );
-
-    Navigator.pop(context); // Go back to Order screen after request
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Payment Processing"),
+        title: const Text("Payment"),
         backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              "Pay with Airtel Money",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
             const SizedBox(height: 20),
-            Text(
-              "Amount to Pay: \$${widget.amount.toStringAsFixed(2)}",
-              style: const TextStyle(fontSize: 20, color: Colors.green),
+
+            // Airtel Logo + Title
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "images/airtelMoneyLogo.png", // Airtel Money Logo
+                  height: 100,
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "Enter Airtel Money Number",
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
+
             const SizedBox(height: 30),
 
-            // Phone number input
-            TextField(
-              controller: _phoneController,
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                hintText: "Enter Airtel Money number",
-                prefixIcon: const Icon(Icons.phone),
-                border: OutlineInputBorder(
+            // Phone Input Row
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade400),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Text(
+                    "+265",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextField(
+                    controller: _phoneController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "Airtel Money Number",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 30),
+
+            // Amount Display
+            Text(
+              "Amount: MWK ${widget.amount.toStringAsFixed(2)}",
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(height: 40),
+
+            // Pay Button
+            ElevatedButton(
+              onPressed: _processPayment,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 14,
+                ),
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-            ),
-            const SizedBox(height: 30),
-
-            // Proceed button
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: _isProcessing ? null : _processPayment,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: _isProcessing
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                        "Proceed Payment",
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
+              child: const Text(
+                "Confirm & Pay",
+                style: TextStyle(fontSize: 18, color: Colors.white),
               ),
             ),
           ],
