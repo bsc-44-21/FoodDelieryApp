@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/pages/paymentProcessing.dart';
 import 'details.dart'; // Import to access cartItems
 
 class Order extends StatefulWidget {
@@ -231,10 +232,17 @@ class _OrderState extends State<Order> {
                         ),
                       ),
                       onPressed: () {
-                        // Checkout logic
+                        // 👉 Navigate to PaymentScreen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PaymentScreen(amount: totalPrice),
+                          ),
+                        );
                       },
                       child: const Text(
-                        "Pay Your Order", //Where payment will be processed once clicked
+                        "Pay Your Order",
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),
