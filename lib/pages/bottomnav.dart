@@ -21,7 +21,6 @@ class _BottomNavState extends State<BottomNav> {
   late Profile profilePage;
   late Order orderPage;
   late Wallet walletPage;
-
   @override
   void initState() {
     super.initState();
