@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/pages/signUp.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -30,6 +31,26 @@ class _SignInScreenState extends State<SignInScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+
+  Future<void> _signInWithGithub() async {
+    try {
+      await supabase.auth.signInWithOAuth(
+        OAuthProvider.github,
+        redirectTo: kIsWeb ? null : 'io.supabase.foodapp://login-callback/',
+        authScreenLaunchMode: kIsWeb
+            ? LaunchMode.platformDefault
+            : LaunchMode.externalApplication,
+      );
+    } on AuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('GitHub sign-in failed: ${e.message}')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
@@ -121,20 +142,18 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               const SizedBox(height: 20),
 
-              // Social Buttons (Google & Facebook)
+              // Social Buttons (GitHub & Facebook)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton.icon(
-                    onPressed: () {
-                      // TODO: Implement Google OAuth via Supabase
-                    },
+                    onPressed: _signInWithGithub,
                     icon: Image.asset(
-                      "images/google.png",
+                      "images/github.png",
                       width: 30,
                       height: 30,
                     ),
-                    label: const Text("Google"),
+                    label: const Text("Github"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
